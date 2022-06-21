@@ -5,19 +5,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        green: {
-          500: "#00B37E",
-          700: "#00875F",
-          900: "#015F43",
-        },
         sky: {
-          300: "#81D8F7",
+          400: "#03F7EB",
         },
         orange: {
           400: "#FBA94C",
         },
         red: {
           400: "#F75A68",
+        },
+        rose: {
+          700: "#AB2346",
         },
         neutral: {
           300: "#E1E1E6",
