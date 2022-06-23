@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import { SpinnerGap } from "phosphor-react";
 
 import { Lesson, LessonData } from "./Lesson";
+import { Loading } from "./Loading";
 
 const GET_LESSONS_QUERY = gql`
   query {
@@ -26,10 +26,7 @@ export const Sidebar = () => {
 
       <section className="flex flex-col gap-8">
         {loading ? (
-          <SpinnerGap
-            size={45}
-            className="animate-spin self-center mt-6 text-rose-700"
-          />
+          <Loading iconSize={45} />
         ) : data?.lessons?.length > 0 ? (
           <>
             {data?.lessons?.map((lesson: LessonData) => (

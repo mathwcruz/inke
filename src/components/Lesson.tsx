@@ -1,7 +1,8 @@
 import { useCallback, useMemo } from "react";
-import { CheckCircle, Lock } from "phosphor-react";
+import { useParams } from "react-router-dom";
 import { isPast, format } from "date-fns";
 import { enUS } from "date-fns/locale";
+import { CheckCircle, Lock } from "phosphor-react";
 
 export type LessonData = {
   id: string;
@@ -22,15 +23,17 @@ const LESSON_TYPES = {
 Object.freeze(LESSON_TYPES);
 
 export const Lesson = ({ lesson }: LessonProps) => {
+  const { slug } = useParams<{ slug: string }>();
+
   const isLessonAvailable = useMemo(
     () => isPast(new Date(lesson?.availableAt)),
     [lesson?.availableAt]
   );
 
-  const isSelected = false;
+  const isSelected = useMemo(() => slug === lesson?.slug, [slug, lesson?.slug]);
 
   const handleWatchLesson = useCallback((lessonSlug: string) => {
-    console.log({ lessonSlug });
+    window.location.href = `/event/lesson/${lessonSlug}`;
   }, []);
 
   return (
