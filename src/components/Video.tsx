@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { DefaultUi, Player, Youtube } from "@vime/react";
-import { DiscordLogo, FileArrowDown, Image, Lightning } from "phosphor-react";
+import { FileArrowDown, Image, Lightning } from "phosphor-react";
 
 import { LessonLinkCard } from "./LessonLinkCard";
 
@@ -21,6 +21,10 @@ const GET_LESSON_BY_SLUG_QUERY = gql`
         bio
         avatarURL
       }
+
+      challenge {
+        url
+      }
     }
   }
 `;
@@ -36,6 +40,9 @@ interface GetLessonBySlugResponse {
       name: string;
       bio: string;
       avatarURL: string;
+    };
+    challenge: {
+      url: string;
     };
   };
 }
@@ -92,22 +99,17 @@ export const Video = ({ lessonSlug }: VideoProps) => {
                   </div>
                 </div>
               </div>
-              <ul className="flex flex-col gap-4">
+              {data?.lesson?.challenge?.url && (
                 <a
-                  href=""
-                  className="p-4 text-sm bg-rose-600 flex items-center rounded font-bold uppercase gap-2 justify-center hover:bg-rose-700 transition-colors duration-200"
-                >
-                  <DiscordLogo size={24} />
-                  Discord Community
-                </a>
-                <a
-                  href=""
-                  className="p-4 text-sm border border-sky-400 text-sky-400 flex items-center rounded font-bold uppercase gap-2 justify-center hover:bg-sky-400 hover:text-neutral-900 transition-colors duration-200"
+                  href={data?.lesson?.challenge?.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-4 text-neutral-900 hover:opacity-75 text-sm bg-sky-400 flex items-center rounded font-bold uppercase gap-2 justify-center transition-colors duration-200"
                 >
                   <Lightning size={24} />
                   Access the challenge
                 </a>
-              </ul>
+              )}
             </div>
             {(data?.lesson?.complementaryMaterial ||
               data?.lesson?.exclusiveWallpapers) && (
