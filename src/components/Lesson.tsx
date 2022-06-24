@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { isPast, format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { CheckCircle, Lock } from "phosphor-react";
@@ -23,6 +23,7 @@ const LESSON_TYPES = {
 Object.freeze(LESSON_TYPES);
 
 export const Lesson = ({ lesson }: LessonProps) => {
+  const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
 
   const isLessonAvailable = useMemo(
@@ -33,7 +34,7 @@ export const Lesson = ({ lesson }: LessonProps) => {
   const isSelected = useMemo(() => slug === lesson?.slug, [slug, lesson?.slug]);
 
   const handleWatchLesson = useCallback((lessonSlug: string) => {
-    window.location.href = `/event/lesson/${lessonSlug}`;
+    navigate(`/event/lesson/${lessonSlug}`);
   }, []);
 
   return (

@@ -26,7 +26,7 @@ export const Sidebar = () => {
 
       <section className="flex flex-col gap-8">
         {loading ? (
-          <Loading iconSize={45} />
+          <Loading iconSize={42} />
         ) : data?.lessons?.length > 0 ? (
           <>
             {data?.lessons?.map((lesson: LessonData) => (

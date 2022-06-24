@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 
 import { Sidebar } from "../components/Sidebar";
@@ -22,6 +22,7 @@ interface GetLessonsSlugResponse {
 }
 
 export const Event = () => {
+  const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
   const { data, loading } = useQuery<GetLessonsSlugResponse>(
     GET_LESSONS_SLUG_QUERY
@@ -33,7 +34,7 @@ export const Event = () => {
     }
 
     const lessonsSlugs = data?.lessons?.map((lesson) => lesson?.slug);
-    window.location.href = `/event/lesson/${lessonsSlugs?.shift()}`;
+    navigate(`/event/lesson/${lessonsSlugs?.shift()}`);
   }, [data?.lessons]);
 
   return (
