@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
+import Cookies from "js-cookie";
 
 import { Sidebar } from "../components/Sidebar";
 import { Header } from "../components/Header";
@@ -27,6 +28,14 @@ export const Event = () => {
   const { data, loading } = useQuery<GetLessonsSlugResponse>(
     GET_LESSONS_SLUG_QUERY
   );
+
+  useEffect(() => {
+    const userIsRegistered = Cookies.get("@inke:userData") || "";
+
+    if (!userIsRegistered) {
+      navigate("/");
+    }
+  }, []);
 
   useEffect(() => {
     if (loading || !!slug) {

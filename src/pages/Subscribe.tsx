@@ -1,7 +1,9 @@
-import { FormEvent, useCallback, useMemo, useState } from "react";
+import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
+import SimpleCrypto from "simple-crypto-js";
 
 import codeMockup from "../assets/code-mockup.png";
 import inkeLogo from "../assets/inke-logo.svg";
@@ -9,17 +11,16 @@ import inkeLogo from "../assets/inke-logo.svg";
 import { Loading } from "../components/Loading";
 import { validateEmailField } from "../utils/field-validator";
 
+const simpleCrypto = new SimpleCrypto("@inke:userData");
+
 const CREATE_SUBSCRIBER_MUTATION = gql`
   mutation CreateSubscriber($name: String!, $email: String!) {
     createSubscriber(data: { name: $name, email: $email }) {
+      id
       name
     }
   }
 `;
-
-interface CreateSubscriberResponse {
-  name: string;
-}
 
 type UserData = {
   name: string;
@@ -29,8 +30,9 @@ type UserData = {
 export const Subscribe = () => {
   const navigate = useNavigate();
 
-  const [createSubscriber, { data, loading }] =
-    useMutation<CreateSubscriberResponse>(CREATE_SUBSCRIBER_MUTATION);
+  const [createSubscriber, { loading }] = useMutation(
+    CREATE_SUBSCRIBER_MUTATION
+  );
 
   const [userData, setUserData] = useState<UserData>({} as UserData);
 
@@ -55,7 +57,7 @@ export const Subscribe = () => {
       }
 
       try {
-        await createSubscriber({
+        const response = await createSubscriber({
           variables: {
             name: userData?.name,
             email: userData?.email,
@@ -64,12 +66,20 @@ export const Subscribe = () => {
 
         setUserData({} as UserData);
 
-        toast.success(`${data?.name} you are registered to the event `, {
-          autoClose: 2000,
-          position: "top-right",
-          hideProgressBar: false,
-          closeOnClick: true,
-        });
+        Cookies.set(
+          "@inke:userData",
+          simpleCrypto.encrypt(response?.data?.createSubscriber?.id || "")
+        );
+
+        toast.success(
+          `${response?.data?.createSubscriber?.name} you are registered to the event `,
+          {
+            autoClose: 2000,
+            position: "top-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+          }
+        );
 
         navigate("/event");
       } catch (error) {
@@ -81,11 +91,11 @@ export const Subscribe = () => {
         });
       }
     },
-    [userData, createSubscriber, data]
+    [userData, createSubscriber]
   );
 
   return (
-    <div className="min-h-screen px-5 bg-blur bg-cover bg-no-repeat flex flex-col items-center">
+    <div className="min-h-screen px-5 bg-blur bg-cover bg-no-repeat flex flex-col items-center justify-between">
       <div className="max-w-[1100px] w-full gap-4 flex items-center justify-between mt-20 mx-auto">
         <div className="max-w-[640px]">
           <div className="flex flex-row gap-3 items-center">
@@ -103,9 +113,9 @@ export const Subscribe = () => {
             in the market.
           </span>
         </div>
-        <div className="p-8 w-full bg-neutral-800 border border-neutral-600 rounded">
+        <div className="p-8 bg-neutral-800 border border-neutral-600 rounded">
           {loading ? (
-            <div className="flex items-center justify-center mb-4">
+            <div className="flex items-center justify-center mb-4 min-h-[256px] min-w-[244px]">
               <Loading iconSize={42} />
             </div>
           ) : (
@@ -149,7 +159,7 @@ export const Subscribe = () => {
           )}
         </div>
       </div>
-      <img src={codeMockup} className="mt-10" alt="" />
+      <img src={codeMockup} className="max-w-4xl w-full" alt="" />
     </div>
   );
 };
