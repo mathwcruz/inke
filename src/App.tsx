@@ -1,4 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Router } from "./Router";
 
@@ -10,6 +12,7 @@ const App = () => {
     <ApolloProvider client={apolloClient}>
       <BrowserRouter>
         <Router />
+        <ToastContainer />
       </BrowserRouter>
     </ApolloProvider>
   );
