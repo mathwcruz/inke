@@ -4,6 +4,9 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      backgroundImage: {
+        blur: "url(/src/assets/blur-background.png)",
+      },
       colors: {
         sky: {
           400: "#03F7EB",
