@@ -1,0 +1,5 @@
+query GetLessonsSlugs {
+  lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
+    slug
+  }
+}

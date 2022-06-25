@@ -1,33 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
 import Cookies from "js-cookie";
+
+import { useGetLessonsSlugsQuery } from "../graphql/generated";
 
 import { Sidebar } from "../components/Sidebar";
 import { Header } from "../components/Header";
 import { Video } from "../components/Video";
 import { Loading } from "../components/Loading";
 
-const GET_LESSONS_SLUG_QUERY = gql`
-  query {
-    lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
-      slug
-    }
-  }
-`;
-
-interface GetLessonsSlugResponse {
-  lessons: {
-    slug: string;
-  }[];
-}
-
 export const Event = () => {
   const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
-  const { data, loading } = useQuery<GetLessonsSlugResponse>(
-    GET_LESSONS_SLUG_QUERY
-  );
+  const { data, loading } = useGetLessonsSlugsQuery();
 
   useEffect(() => {
     const userIsRegistered = Cookies.get("@inke:userData") || "";

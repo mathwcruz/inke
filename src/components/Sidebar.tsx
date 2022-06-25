@@ -1,22 +1,10 @@
-import { gql, useQuery } from "@apollo/client";
+import { useGetLessonsQuery } from "../graphql/generated";
 
-import { Lesson, LessonData } from "./Lesson";
+import { Lesson } from "./Lesson";
 import { Loading } from "./Loading";
 
-const GET_LESSONS_QUERY = gql`
-  query {
-    lessons(orderBy: availableAt_ASC, stage: PUBLISHED) {
-      id
-      slug
-      title
-      lessonType
-      availableAt
-    }
-  }
-`;
-
 export const Sidebar = () => {
-  const { data, loading } = useQuery(GET_LESSONS_QUERY);
+  const { data, loading } = useGetLessonsQuery();
 
   return (
     <aside className="w-[348px] p-6 border-l border-neutral-600">
@@ -27,10 +15,17 @@ export const Sidebar = () => {
       <section className="flex flex-col gap-8">
         {loading ? (
           <Loading iconSize={42} />
-        ) : data?.lessons?.length > 0 ? (
+        ) : data?.lessons?.length ? (
           <>
-            {data?.lessons?.map((lesson: LessonData) => (
-              <Lesson key={lesson?.id} lesson={lesson} />
+            {data?.lessons?.map((lesson) => (
+              <Lesson
+                key={lesson?.id}
+                id={lesson?.id}
+                slug={lesson?.slug}
+                title={lesson?.title}
+                availableAt={lesson?.availableAt}
+                lessonType={lesson?.lessonType}
+              />
             ))}
           </>
         ) : (

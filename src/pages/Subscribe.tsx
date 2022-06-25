@@ -1,9 +1,10 @@
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, useCallback, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import SimpleCrypto from "simple-crypto-js";
+
+import { useCreateSubscriberMutation } from "../graphql/generated";
 
 import codeMockup from "../assets/code-mockup.png";
 import inkeLogo from "../assets/inke-logo.svg";
@@ -13,15 +14,6 @@ import { validateEmailField } from "../utils/field-validator";
 
 const simpleCrypto = new SimpleCrypto("@inke:userData");
 
-const CREATE_SUBSCRIBER_MUTATION = gql`
-  mutation CreateSubscriber($name: String!, $email: String!) {
-    createSubscriber(data: { name: $name, email: $email }) {
-      id
-      name
-    }
-  }
-`;
-
 type UserData = {
   name: string;
   email: string;
@@ -30,9 +22,7 @@ type UserData = {
 export const Subscribe = () => {
   const navigate = useNavigate();
 
-  const [createSubscriber, { loading }] = useMutation(
-    CREATE_SUBSCRIBER_MUTATION
-  );
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation();
 
   const [userData, setUserData] = useState<UserData>({} as UserData);
 

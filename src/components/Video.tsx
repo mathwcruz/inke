@@ -1,63 +1,21 @@
-import { gql, useQuery } from "@apollo/client";
 import { DefaultUi, Player, Youtube } from "@vime/react";
 import { FileArrowDown, Image, Lightning } from "phosphor-react";
 
-import { LessonLinkCard } from "./LessonLinkCard";
+import { useGetLessonBySlugQuery } from "../graphql/generated";
 
-import "@vime/core/themes/default.css";
+import { LessonLinkCard } from "./LessonLinkCard";
 import { Loading } from "./Loading";
 
-const GET_LESSON_BY_SLUG_QUERY = gql`
-  query GetLessonBySlug($slug: String) {
-    lesson(where: { slug: $slug }) {
-      title
-      description
-      videoId
-      complementaryMaterial
-      exclusiveWallpapers
-
-      teacher {
-        name
-        bio
-        avatarURL
-      }
-
-      challenge {
-        url
-      }
-    }
-  }
-`;
-
-interface GetLessonBySlugResponse {
-  lesson: {
-    title: string;
-    videoId: string;
-    description: string;
-    complementaryMaterial: string;
-    exclusiveWallpapers: string;
-    teacher: {
-      name: string;
-      bio: string;
-      avatarURL: string;
-    };
-    challenge: {
-      url: string;
-    };
-  };
-}
+import "@vime/core/themes/default.css";
 
 interface VideoProps {
   lessonSlug: string;
 }
 
 export const Video = ({ lessonSlug }: VideoProps) => {
-  const { data, loading } = useQuery<GetLessonBySlugResponse>(
-    GET_LESSON_BY_SLUG_QUERY,
-    {
-      variables: { slug: lessonSlug },
-    }
-  );
+  const { data, loading } = useGetLessonBySlugQuery({
+    variables: { slug: lessonSlug },
+  });
 
   return (
     <div className="flex-1">

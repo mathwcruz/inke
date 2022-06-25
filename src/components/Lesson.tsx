@@ -4,16 +4,12 @@ import { isPast, format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { CheckCircle, Lock } from "phosphor-react";
 
-export type LessonData = {
+interface LessonProps {
   id: string;
   title: string;
   slug: string;
   lessonType: "class" | "live";
   availableAt: string;
-};
-
-interface LessonProps {
-  lesson: LessonData;
 }
 
 const LESSON_TYPES = {
@@ -22,16 +18,22 @@ const LESSON_TYPES = {
 };
 Object.freeze(LESSON_TYPES);
 
-export const Lesson = ({ lesson }: LessonProps) => {
+export const Lesson = ({
+  id,
+  slug,
+  title,
+  availableAt,
+  lessonType,
+}: LessonProps) => {
   const navigate = useNavigate();
-  const { slug } = useParams<{ slug: string }>();
+  const { slug: _slug } = useParams<{ slug: string }>();
 
   const isLessonAvailable = useMemo(
-    () => isPast(new Date(lesson?.availableAt)),
-    [lesson?.availableAt]
+    () => isPast(new Date(availableAt)),
+    [availableAt]
   );
 
-  const isSelected = useMemo(() => slug === lesson?.slug, [slug, lesson?.slug]);
+  const isSelected = useMemo(() => _slug === slug, [_slug, slug]);
 
   const handleWatchLesson = useCallback((lessonSlug: string) => {
     navigate(`/event/lesson/${lessonSlug}`);
@@ -40,11 +42,9 @@ export const Lesson = ({ lesson }: LessonProps) => {
   return (
     <li className="list-none">
       <span className="text-neutral-500">
-        {format(
-          new Date(lesson?.availableAt),
-          "EEEE' • 'MMMM do' • 'k':'mm bbb",
-          { locale: enUS }
-        )}
+        {format(new Date(availableAt), "EEEE' • 'MMMM do' • 'k':'mm bbb", {
+          locale: enUS,
+        })}
       </span>
       <button
         aria-disabled={!isLessonAvailable}
@@ -59,11 +59,11 @@ export const Lesson = ({ lesson }: LessonProps) => {
         title={
           !isLessonAvailable
             ? `This ${LESSON_TYPES?.[
-                lesson?.lessonType
+                lessonType
               ]?.toLowerCase()} will be available soon`
             : ""
         }
-        onClick={() => handleWatchLesson(lesson?.slug)}
+        onClick={() => handleWatchLesson(slug)}
       >
         <header className="flex items-center justify-between gap-2">
           {isLessonAvailable ? (
@@ -86,11 +86,11 @@ export const Lesson = ({ lesson }: LessonProps) => {
               isSelected ? "border-white" : "border-rose-500"
             }`}
           >
-            {LESSON_TYPES?.[lesson?.lessonType]}
+            {LESSON_TYPES?.[lessonType]}
           </span>
         </header>
         <strong className="text-neutral-400 mt-5 block text-left">
-          {lesson?.title}
+          {title}
         </strong>
       </button>
     </li>
