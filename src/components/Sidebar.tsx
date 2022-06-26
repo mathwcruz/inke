@@ -3,11 +3,17 @@ import { useGetLessonsQuery } from "../graphql/generated";
 import { Lesson } from "./Lesson";
 import { Loading } from "./Loading";
 
-export const Sidebar = () => {
+interface SidebarProps {
+  className?: string;
+}
+
+export const Sidebar = ({ className = "" }: SidebarProps) => {
   const { data, loading } = useGetLessonsQuery();
 
   return (
-    <aside className="w-[348px] p-6 border-l border-neutral-600 hidden lg:block">
+    <aside
+      className={`lg:w-[348px] p-6 border-l border-neutral-600 w-full ${className}`}
+    >
       <h4 className="font-bold text-2xl pb-6 mb-6 border-b border-b-neutral-500 block">
         Classes schedule
       </h4>

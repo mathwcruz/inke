@@ -88,9 +88,9 @@ export const Subscribe = () => {
     <div className="min-h-screen px-5 bg-blur bg-cover bg-no-repeat flex flex-col items-center justify-between">
       <div className="max-w-[1100px] w-full gap-4 flex flex-col sm:flex-row items-center justify-between mt-20 mx-auto">
         <div className="max-w-[640px]">
-          <div className="flex flex-row gap-3 items-center">
+          <div className="flex flex-row gap-1 sm:gap-3 items-center">
             <img className="w-14" src={inkeLogo} alt="Inke Logo" />
-            <h4 className="text-center font-bold text-2xl sm:text-4xl">Inke</h4>
+            <h4 className="text-center font-bold text-3xl sm:text-4xl">Inke</h4>
           </div>
           <h1 className="sm:mt-8 mt-5 sm:text-[2.5rem] text-2xl leading-tight">
             Build a{" "}
@@ -103,7 +103,7 @@ export const Subscribe = () => {
             in the market.
           </span>
         </div>
-        <div className="p-8 bg-neutral-800 sm:border sm:border-neutral-600 sm:rounded w-screen">
+        <div className="p-8 bg-neutral-800 sm:border sm:border-neutral-600 sm:rounded w-screen sm:w-[400px]">
           {loading ? (
             <div className="flex items-center justify-center mb-4 min-h-[256px] min-w-[244px]">
               <Loading iconSize={42} />

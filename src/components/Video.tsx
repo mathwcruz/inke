@@ -64,7 +64,7 @@ export const Video = ({ lessonSlug }: VideoProps) => {
                   href={data?.lesson?.challenge?.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 text-neutral-900 w-full max-w-xs hover:opacity-75 text-sm bg-sky-400 flex items-center rounded font-bold uppercase gap-2 justify-center transition-colors duration-200"
+                  className="p-4 text-neutral-900 w-full md:w-[237px] hover:opacity-75 text-sm bg-sky-400 flex items-center rounded font-bold uppercase gap-2 justify-center transition-colors duration-200"
                 >
                   <Lightning size={24} />
                   Access the challenge
