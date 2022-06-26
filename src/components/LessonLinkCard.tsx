@@ -21,10 +21,14 @@ export const LessonLinkCard = ({
       rel="noopener noreferrer"
       className="bg-neutral-900 rounded overflow-hidden flex items-stretch gap-6 hover:bg-neutral-800 transition-colors"
     >
-      <div className="bg-rose-700 h-full p-6 flex items-center">{icon}</div>
+      <div className="bg-rose-700 h-full p-3 md:p-6 flex items-center">
+        {icon}
+      </div>
       <div className="py-6 leading-relaxed">
-        <strong className="text-2xl">{title}</strong>
-        <p className="text-sm text-neutral-300 mt-2">{description}</p>
+        <strong className="md:text-2xl text-base">{title}</strong>
+        <p className="text-xs md:text-sm text-neutral-300 mt-2">
+          {description}
+        </p>
       </div>
       <div className="h-full p-6 flex items-center">
         <CaretRight size={24} />

@@ -86,31 +86,31 @@ export const Subscribe = () => {
 
   return (
     <div className="min-h-screen px-5 bg-blur bg-cover bg-no-repeat flex flex-col items-center justify-between">
-      <div className="max-w-[1100px] w-full gap-4 flex items-center justify-between mt-20 mx-auto">
+      <div className="max-w-[1100px] w-full gap-4 flex flex-col sm:flex-row items-center justify-between mt-20 mx-auto">
         <div className="max-w-[640px]">
           <div className="flex flex-row gap-3 items-center">
             <img className="w-14" src={inkeLogo} alt="Inke Logo" />
-            <h4 className="text-center font-bold text-4xl">Inke</h4>
+            <h4 className="text-center font-bold text-2xl sm:text-4xl">Inke</h4>
           </div>
-          <h1 className="mt-8 text-[2.5rem] leading-tight">
+          <h1 className="sm:mt-8 mt-5 sm:text-[2.5rem] text-2xl leading-tight">
             Build a{" "}
             <strong className="text-sky-400">complete application</strong> from
             scratch
           </h1>
-          <span className="mt-4 text-neutral-400 leading-relaxed">
+          <span className="mt-4 block text-neutral-400 leading-relaxed">
             In just one week you will master in practice one of the most used
             technologies and with high demand to access the best opportunities
             in the market.
           </span>
         </div>
-        <div className="p-8 bg-neutral-800 border border-neutral-600 rounded">
+        <div className="p-8 bg-neutral-800 sm:border sm:border-neutral-600 sm:rounded w-screen">
           {loading ? (
             <div className="flex items-center justify-center mb-4 min-h-[256px] min-w-[244px]">
               <Loading iconSize={42} />
             </div>
           ) : (
             <>
-              <strong className="text-2xl mb-6 block">
+              <strong className="sm:text-2xl text-lg mb-6 block">
                 Subscribe for free
               </strong>
               <form
@@ -124,7 +124,7 @@ export const Subscribe = () => {
                   }
                   type="text"
                   placeholder="Your full name"
-                  className="bg-neutral-900 focus:outline-none focus:border-rose-700 border transition-colors ease-in-out duration-200 border-transparent rounded px-5 h-14"
+                  className="bg-neutral-900 focus:outline-none focus:border-rose-700 border transition-colors ease-in-out duration-200 border-transparent rounded px-5 h-12 sm:h-14"
                 />
                 <input
                   value={userData?.email}
@@ -133,14 +133,14 @@ export const Subscribe = () => {
                   }
                   type="text"
                   placeholder="Type your email"
-                  className="bg-neutral-900 focus:outline-none focus:border-rose-700 border transition-colors ease-in-out duration-200 border-transparent rounded px-5 h-14"
+                  className="bg-neutral-900 focus:outline-none focus:border-rose-700 border transition-colors ease-in-out duration-200 border-transparent rounded px-5 h-12 sm:h-14"
                 />
 
                 <button
                   type="submit"
                   disabled={!isAllFieldsFilled || loading}
                   title={!isAllFieldsFilled ? "Fill out the fields above" : ""}
-                  className="mt-4 bg-rose-600 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-rose-600 uppercase py-4 rounded font-bold text-small hover:bg-rose-700 transition-colors duration-200"
+                  className="mt-4 bg-rose-600 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed disabled:hover:bg-rose-600 uppercase sm:py-4 py-3 rounded font-bold text-small hover:bg-rose-700 transition-colors duration-200"
                 >
                   Guarantee my spot
                 </button>

@@ -34,10 +34,12 @@ export const Video = ({ lessonSlug }: VideoProps) => {
             </div>
           </div>
           <div className="p-8 max-w-[1100px] mx-auto">
-            <div className="flex items-start gap-16">
+            <div className="flex flex-col md:flex-row items-start md:gap-16 gap-8">
               <div className="flex-1">
-                <h1 className="text-2xl font-bold">{data?.lesson?.title}</h1>
-                <p className="mt-4 text-neutral-400 leading-relaxed">
+                <h1 className="sm:text-2xl text-xl font-bold">
+                  {data?.lesson?.title}
+                </h1>
+                <p className="mt-4 text-neutral-400 text-sm sm:text-base leading-relaxed">
                   {data?.lesson?.description}
                 </p>
                 <div className="flex items-center gap-4 mt-6">
@@ -48,10 +50,10 @@ export const Video = ({ lessonSlug }: VideoProps) => {
                   />
 
                   <div className="leading-relaxed">
-                    <strong className="font-bold text-2xl block">
+                    <strong className="font-bold sm:text-2xl text-xl block">
                       {data?.lesson?.teacher?.name}
                     </strong>
-                    <span className="text-neutral-500 text-sm block">
+                    <span className="text-neutral-500 text-sm block mt-2">
                       {data?.lesson?.teacher?.bio}
                     </span>
                   </div>
@@ -62,7 +64,7 @@ export const Video = ({ lessonSlug }: VideoProps) => {
                   href={data?.lesson?.challenge?.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-4 text-neutral-900 hover:opacity-75 text-sm bg-sky-400 flex items-center rounded font-bold uppercase gap-2 justify-center transition-colors duration-200"
+                  className="p-4 text-neutral-900 w-full max-w-xs hover:opacity-75 text-sm bg-sky-400 flex items-center rounded font-bold uppercase gap-2 justify-center transition-colors duration-200"
                 >
                   <Lightning size={24} />
                   Access the challenge
@@ -71,7 +73,7 @@ export const Video = ({ lessonSlug }: VideoProps) => {
             </div>
             {(data?.lesson?.complementaryMaterial ||
               data?.lesson?.exclusiveWallpapers) && (
-              <div className="gap-8  mt-20 grid grid-cols-2">
+              <div className="gap-8 mt-20 grid grid-cols-1 md:grid-cols-2">
                 {data?.lesson?.complementaryMaterial && (
                   <LessonLinkCard
                     title="Complementary material"
