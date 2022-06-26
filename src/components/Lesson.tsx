@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
 import { isPast, format } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { CheckCircle, Lock } from "phosphor-react";
@@ -25,7 +25,6 @@ export const Lesson = ({
   availableAt,
   lessonType,
 }: LessonProps) => {
-  const navigate = useNavigate();
   const { slug: _slug } = useParams<{ slug: string }>();
 
   const isLessonAvailable = useMemo(
@@ -35,10 +34,6 @@ export const Lesson = ({
 
   const isSelected = useMemo(() => _slug === slug, [_slug, slug]);
 
-  const handleWatchLesson = useCallback((lessonSlug: string) => {
-    navigate(`/event/lesson/${lessonSlug}`);
-  }, []);
-
   return (
     <li className="list-none">
       <span className="text-neutral-500">
@@ -46,9 +41,9 @@ export const Lesson = ({
           locale: enUS,
         })}
       </span>
-      <button
+      <a
         aria-disabled={!isLessonAvailable}
-        disabled={!isLessonAvailable}
+        href={`/event/lesson/${slug}`}
         className={`${
           !isLessonAvailable
             ? "opacity-50 cursor-not-allowed hover:border-neutral-600"
@@ -63,7 +58,6 @@ export const Lesson = ({
               ]?.toLowerCase()} will be available soon`
             : ""
         }
-        onClick={() => handleWatchLesson(slug)}
       >
         <header className="flex items-center justify-between gap-2">
           {isLessonAvailable ? (
@@ -92,7 +86,7 @@ export const Lesson = ({
         <strong className="text-neutral-400 mt-5 block text-left">
           {title}
         </strong>
-      </button>
+      </a>
     </li>
   );
 };

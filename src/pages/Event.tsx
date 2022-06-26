@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
 
 import { useGetLessonsSlugsQuery } from "../graphql/generated";
 
@@ -13,14 +12,6 @@ export const Event = () => {
   const navigate = useNavigate();
   const { slug } = useParams<{ slug: string }>();
   const { data, loading } = useGetLessonsSlugsQuery();
-
-  useEffect(() => {
-    const userIsRegistered = Cookies.get("@inke:userData") || "";
-
-    if (!userIsRegistered) {
-      navigate("/");
-    }
-  }, []);
 
   useEffect(() => {
     if (loading || !!slug) {
