@@ -15,13 +15,13 @@
 ## :computer: Demonstration of the application Web
 
 <p align="center">
-  <img src="./.github/desktop-demonstration.gif" width="1400px"/>
+  <img src="./.github/desktop-demonstration.gif" width="1000px"/>
 </p>
 
 ## **Demonstration of the application - Mobile Layout** 📱
 
 <p align="center">
-  <img src="./.github/mobile-demonstration.gif" width="350px"/>
+  <img src="./.github/mobile-demonstration.gif" width="1000px"/>
 </p>
 
 <h3 align="center"> 
